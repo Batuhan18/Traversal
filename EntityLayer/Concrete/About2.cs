@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete
 {
-    public class Feature
+    public class About2
     {
         [Key]
-        public int FeatureID { get; set; }
-        public string Title { get; set; }
+        public int About2ID { get; set; }
+        public string Title1 { get; set; }
+        public string Title2 { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
-        public bool Status { get; set; }
     }
 }
