@@ -3,8 +3,10 @@ using DataAccessLayer.Concrete;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Traversal.Models;
+using OfficeOpenXml;
 using Serilog;
+using Traversal.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,8 @@ builder.Services.AddLogging(x =>
 builder.Services.AddDbContext<Context>();
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>()
     .AddEntityFrameworkStores<Context>();
+
+ExcelPackage.License.SetNonCommercialPersonal("Batuhan Avcýoðlu");
 
 
 builder.Services.ContainerDependencies();
