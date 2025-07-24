@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<h2>Şehir - Ülke İşlemleri</h2>
+<br />
+<button type="button" id="btngetlist" class="btn btn-outline-info">Şehir Listesi</button>
+<button type="button" id="btngetbyid" class="btn btn-outline-primary">Şehir Getir</button>
+<button type="button" id="btnaddcity" class="btn btn-outline-warning">Şehir Ekle</button>
+<button type="button" id="btndeletecity" class="btn btn-outline-danger">Şehir Sil</button>
+<button type="button" id="btnupdatecity" class="btn btn-outline-success">Şehir Güncelle</button>
+<br />
+<br />
+<div id="citylist">
+    Şehir
+</div>
+<div>
+    <input type="text" id="txtcity" placeholder="Şehir adını giriniz" class="form-control" />
+    <br />
+    <input type="text" id="txtdaynight" placeholder="Gün - Gece Sayısı" class="form-control" />
+    <br />
+    <input type="text" id="txtprice" placeholder="Fiyat" class="form-control" />
+    <br />
+    <input type="text" id="txtcapacity" placeholder="Kişi sayısı" class="form-control" />
+</div>
+
+<script>
+    $("#btngetlist").click(function(){
+        $.ajax({
+            contentType:"application/json",
+            dataType:"json",
+            type:"Get",
+            url:"/Admin/City/CityList/",
+            success:function(func){
+                let w=jQuery.parseJSON(func);
+                console.log(w);
+                let tablehtml="<table class=table table-bordered> <tr><th> Şehir Adı </th><th> Gün - Gece</th> <th> Fiyat </th> </tr>";
+                $.each(w,(index,value)=>{
+                    tablehtml+=`<tr><td>${value.City}</td> <td>${value.DayNight}</td> <td>${value.Price}</td></tr>`
+                });
+                tablehtml+="</table>";
+                $("#citylist").html(tablehtml);
+            }
+        });
+    });
+
+
+    $("#btnaddcity").click(function (){
+        let cityValues= {
+            City:$("#txtcity").val(),
+            DayNight:$("#txtdaynight").val(),
+            Price:$("#txtprice").val(),
+            Capacity:$("#txtcapacity").val()
+        };
+
+        $.ajax({
+            type:"post",
+            url:"/Admin/City/AddCityDestination/",
+            data:cityValues,
+            success:function(func){
+                let result=jQuery.parseJSON(func);
+                alert("Şehir - Rota başarılı bir şekilde eklendi");
+            }
+        });
+    });
+</script>
