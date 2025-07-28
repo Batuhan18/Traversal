@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35913.81 d17.13
+VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traversal", "Traversal\Traversal.csproj", "{81D7C304-CD93-402C-8452-D1053AB33A20}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{B13F7C8B-F0E3-4044-8873-DA10BAE1D2AC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{D1C1F4BC-3651-4AD6-996D-DDBF0CF16F54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOLayer", "DTOLayer\DTOLayer.csproj", "{9059655F-D787-4D96-B968-6B76A0622FEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D1C1F4BC-3651-4AD6-996D-DDBF0CF16F54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1C1F4BC-3651-4AD6-996D-DDBF0CF16F54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1C1F4BC-3651-4AD6-996D-DDBF0CF16F54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9059655F-D787-4D96-B968-6B76A0622FEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9059655F-D787-4D96-B968-6B76A0622FEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9059655F-D787-4D96-B968-6B76A0622FEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9059655F-D787-4D96-B968-6B76A0622FEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

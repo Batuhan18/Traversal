@@ -1,6 +1,7 @@
 ﻿using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Contracts;
 
 
 namespace DataAccessLayer.Concrete
@@ -24,5 +25,6 @@ namespace DataAccessLayer.Concrete
         public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<ContactUs> ContactUses { get; set; }
     }
 }
