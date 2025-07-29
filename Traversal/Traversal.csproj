@@ -8,16 +8,12 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Admin\Data\**" />
-    <Compile Remove="Areas\Admin\Models\**" />
     <Compile Remove="wwwroot\soft-ui-dashboard\**" />
     <Content Remove="Areas\Admin\Data\**" />
-    <Content Remove="Areas\Admin\Models\**" />
     <Content Remove="wwwroot\soft-ui-dashboard\**" />
     <EmbeddedResource Remove="Areas\Admin\Data\**" />
-    <EmbeddedResource Remove="Areas\Admin\Models\**" />
     <EmbeddedResource Remove="wwwroot\soft-ui-dashboard\**" />
     <None Remove="Areas\Admin\Data\**" />
-    <None Remove="Areas\Admin\Models\**" />
     <None Remove="wwwroot\soft-ui-dashboard\**" />
   </ItemGroup>
 
@@ -28,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="ClosedXML" Version="0.105.0" />
     <PackageReference Include="EPPlus" Version="8.0.8" />
     <PackageReference Include="FluentAssertions" Version="8.5.0" />

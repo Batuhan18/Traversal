@@ -1,10 +1,14 @@
 using BusinessLayer.Container;
+using BusinessLayer.ValidationRules;
 using DataAccessLayer.Concrete;
+using DTOLayer.DTOs.AnnouncementDTOs;
 using EntityLayer.Concrete;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using OfficeOpenXml;
-using Serilog;
+using Traversal.Mapping.AutoMapperProfile;
 using Traversal.Models;
 
 
@@ -26,6 +30,9 @@ builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Contex
 
 ExcelPackage.License.SetNonCommercialPersonal("Batuhan Avcýoðlu");
 
+builder.Services.AddAutoMapper(typeof(MapProfile));
+builder.Services.AddTransient<IValidator<AnnouncementAddDto>, AnnouncementValidator>();
+builder.Services.AddControllersWithViews().AddFluentValidation();
 
 builder.Services.ContainerDependencies();
 
