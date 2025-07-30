@@ -13,6 +13,8 @@ namespace Traversal.Mapping.AutoMapperProfile
             CreateMap<AnnouncementAddDto, Announcement>().ReverseMap();
             CreateMap<AppUserRegisterDTOs, AppUser>().ReverseMap();
             CreateMap<AppUserLoginDTOs, AppUser>().ReverseMap();
+            CreateMap<AnnouncemenetListDto, Announcement>().ReverseMap();
+            CreateMap<AnnouncementUpdateDto, Announcement>().ReverseMap();
         }
     }
 }

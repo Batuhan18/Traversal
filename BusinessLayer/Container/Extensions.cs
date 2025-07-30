@@ -1,7 +1,10 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
+using DTOLayer.DTOs.AnnouncementDTOs;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BusinessLayer.Container
@@ -35,6 +38,11 @@ namespace BusinessLayer.Container
 
             services.AddScoped<IPdfService, PdfManager>();
 
+        }
+
+        public static void CustomerValidator(this IServiceCollection services)
+        {
+            services.AddTransient<IValidator<AnnouncementAddDto>, AnnouncementValidator>();
         }
 
 
