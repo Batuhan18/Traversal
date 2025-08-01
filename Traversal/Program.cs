@@ -25,6 +25,8 @@ builder.Services.AddDbContext<Context>();
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>()
     .AddEntityFrameworkStores<Context>();
 
+builder.Services.AddHttpClient();
+
 ExcelPackage.License.SetNonCommercialPersonal("Batuhan Avcýoðlu");
 
 builder.Services.AddAutoMapper(typeof(MapProfile));
