@@ -2,9 +2,12 @@ using BusinessLayer.Container;
 using DataAccessLayer.Concrete;
 using EntityLayer.Concrete;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using OfficeOpenXml;
+using System.Reflection;
+using Traversal.CQRS.Handlers.DestinationHandlers;
 using Traversal.Mapping.AutoMapperProfile;
 using Traversal.Models;
 
@@ -20,6 +23,14 @@ builder.Services.AddLogging(x =>
     x.SetMinimumLevel(LogLevel.Debug);
     x.AddDebug();
 });
+
+builder.Services.AddScoped<GetAllDestinationQueryHandler>();
+builder.Services.AddScoped<GetDestinationByIdQueryHandler>();
+builder.Services.AddScoped<CreateDestinationCommandHandler>();
+builder.Services.AddScoped<RemoveDestinationCommandHandler>();
+builder.Services.AddScoped<UpdateDestinationCommandHandler>();
+
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 builder.Services.AddDbContext<Context>();
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>()
