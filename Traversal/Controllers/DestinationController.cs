@@ -10,7 +10,7 @@ namespace Traversal.Controllers
 
     public class DestinationController : Controller
     {
-     
+
         DestinationManager destinationManager = new DestinationManager(new EfDestinationDal());
         public IActionResult Index()
         {
@@ -21,6 +21,7 @@ namespace Traversal.Controllers
         public IActionResult DestinationDetails(int id)
         {
             ViewBag.i = id;
+            ViewBag.destID = id;
             var values = destinationManager.TGetByID(id);
             return View(values);
         }
