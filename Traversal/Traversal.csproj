@@ -8,13 +8,9 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Admin\Data\**" />
-    <Compile Remove="wwwroot\soft-ui-dashboard\**" />
     <Content Remove="Areas\Admin\Data\**" />
-    <Content Remove="wwwroot\soft-ui-dashboard\**" />
     <EmbeddedResource Remove="Areas\Admin\Data\**" />
-    <EmbeddedResource Remove="wwwroot\soft-ui-dashboard\**" />
     <None Remove="Areas\Admin\Data\**" />
-    <None Remove="wwwroot\soft-ui-dashboard\**" />
   </ItemGroup>
 
   <ItemGroup>

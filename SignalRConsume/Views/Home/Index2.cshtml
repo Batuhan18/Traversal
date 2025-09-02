@@ -1,0 +1,191 @@
+﻿@* 
+@{
+    ViewData["Title"] = "Index2";
+}
+
+@section Scripts
+{
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(() => {
+
+            // Chart veri listesi
+            var visitChartList = [["Tarih", "Edirne", "İstanbul", "Ankara", "Antalya", "Bursa"]];
+
+            // SignalR bağlantısı
+            var connection = new signalR.HubConnectionBuilder()
+                .withUrl("http://localhost:32565/VisitorHub")
+                .withAutomaticReconnect()
+                .build();
+
+            // Bağlantı durumu güncelleme fonksiyonu
+            function updateConnectionStatus(status) {
+                $("#connectionStatus").text(status);
+            }
+
+            // SignalR eventleri
+            connection.onclose(() => updateConnectionStatus("Disconnected"));
+            connection.onreconnecting(() => updateConnectionStatus("Reconnecting..."));
+            // connection.onreconnected(() => updateConnectionStatus("Connected"));
+
+            // Veriyi alma
+            connection.on("ReceiveVisitorList", (visitList) => {
+
+                // Sadece header'ı bırak
+                visitChartList = visitChartList.splice(0, 1);
+
+                // Yeni veriyi ekle
+                visitList.forEach((item) => {
+                    visitChartList.push([
+                        item.visitDate,
+                        item.counts[0],
+                        item.counts[1],
+                        item.counts[2],
+                        item.counts[3],
+                        item.counts[4]
+                    ]);
+                });
+
+                drawChart();
+            });
+
+            // Bağlantıyı başlat
+            connection.start()
+                .then(() => {
+                    updateConnectionStatus("Connected");
+                    connection.invoke("GetVisitorList").catch(err => console.error(err));
+                })
+                .catch(err => {
+                    console.error(err);
+                    updateConnectionStatus("Disconnected");
+                });
+
+            // Google Charts yükleme
+            google.charts.load('current', { packages: ['corechart'] });
+
+            // Chart çizme fonksiyonu
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable(visitChartList);
+
+                var options = {
+                    title: 'Traversal Ziyaertçi Listesi Grafiği',
+                    curveType: 'none',
+                    legend: { position: 'bottom' }
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+                chart.draw(data, options);
+            }
+
+        });
+    </script>
+}
+
+<div class="container">
+    <br />
+    <div class="alert alert-warning">
+        Bağlantınızın Durumu: <b id="connectionStatus">Connecting...</b>
+    </div>
+</div>
+<br />
+
+<div id="curve_chart" style="width: 1200px; height: 800px"></div>
+ *@
+
+@{
+    ViewData["Title"] = "Index2";
+}
+
+@section Scripts
+{
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+
+            var visitChartList = [["Tarih", "Edirne", "İstanbul", "Ankara", "Antalya", "Bursa"]];
+            var chartLoaded = false;
+            var dataReady = false;
+
+            // Google Charts yükle
+            google.charts.load('current', { packages: ['corechart'] });
+            google.charts.setOnLoadCallback(() => {
+                chartLoaded = true;
+                if (dataReady) drawChart();
+            });
+
+            // SignalR bağlantısı
+            var connection = new signalR.HubConnectionBuilder()
+                .withUrl("http://localhost:32565/VisitorHub")
+                .withAutomaticReconnect()
+                .build();
+
+            function updateConnectionStatus(status) {
+                $("#connectionStatus").text(status);
+            }
+
+            connection.onclose(() => updateConnectionStatus("Disconnected"));
+            connection.onreconnecting(() => updateConnectionStatus("Reconnecting..."));
+            connection.onreconnected(() => updateConnectionStatus("Connected"));
+
+            connection.on("ReceiveVisitorList", (visitList) => {
+
+                // Header hariç eski veriyi sil
+                visitChartList = [["Tarih", "Edirne", "İstanbul", "Ankara", "Antalya", "Bursa"]];
+
+                visitList.forEach((item) => {
+                    visitChartList.push([
+                        item.visitDate,
+                        item.counts[0],
+                        item.counts[1],
+                        item.counts[2],
+                        item.counts[3],
+                        item.counts[4]
+                    ]);
+                });
+
+                dataReady = true;
+                if (chartLoaded) drawChart();
+            });
+
+            connection.start()
+                .then(() => {
+                    updateConnectionStatus("Connected");
+                    connection.invoke("GetVisitorList").catch(err => console.error(err));
+                })
+                .catch(err => {
+                    console.error(err);
+                    updateConnectionStatus("Disconnected");
+                });
+
+            function drawChart() {
+                if (visitChartList.length <= 1) return; // sadece header varsa çizme
+
+                var data = google.visualization.arrayToDataTable(visitChartList);
+
+                var options = {
+                    title: 'Traversal Ziyaretçi Listesi Grafiği',
+                    curveType: 'none',
+                    legend: { position: 'bottom' }
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+                chart.draw(data, options);
+            }
+
+        });
+    </script>
+}
+
+<div class="container">
+    <br />
+    <div class="alert alert-warning">
+        Bağlantınızın Durumu: <b id="connectionStatus">Connecting...</b>
+    </div>
+</div>
+<br />
+
+<div id="curve_chart" style="width: 1200px; height: 800px"></div>
