@@ -5,6 +5,7 @@ using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using OfficeOpenXml;
 using System.Reflection;
 using Traversal.CQRS.Handlers.DestinationHandlers;
@@ -38,6 +39,11 @@ builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Contex
 
 builder.Services.AddHttpClient();
 
+builder.Services.AddLocalization(opt =>
+{
+    opt.ResourcesPath = "Resources";
+});
+
 ExcelPackage.License.SetNonCommercialPersonal("Batuhan Avcýoðlu");
 
 builder.Services.AddAutoMapper(typeof(MapProfile));
@@ -51,7 +57,9 @@ builder.Services.AddMvc(config =>
     var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
     config.Filters.Add(new AuthorizeFilter(policy));
 });
-builder.Services.AddMvc();
+builder.Services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
+
+
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -64,7 +72,7 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-   
+
     app.UseHsts();
 }
 
@@ -78,7 +86,9 @@ app.UseAuthentication();
 app.UseRouting();
 
 app.UseAuthorization();
-
+var supportedCultures = new[] { "en", "fr", "es", "gr", "tr", "de" };
+var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[4]).AddSupportedCultures(supportedCultures).AddSupportedUICultures(supportedCultures);
+app.UseRequestLocalization(localizationOptions);
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
